@@ -1,0 +1,51 @@
+{
+  "root": true,
+  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2016,
+    "sourceType": "module"
+  },
+  "env": {
+    "jest": true,
+    "es6": true,
+    "node": true
+  },
+  "ignorePatterns": ["node_modules/", "dist/", "build/", "coverage/"],
+  "rules": {
+    "no-console": [
+      "warn",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "no-unused-vars": "warn",
+    "prefer-const": "error",
+    "no-var": "error",
+    "no-const-assign": "error",
+    "no-undef": "error",
+    "no-undef-init": "warn",
+    "array-callback-return": [
+      "error",
+      {
+        "allowImplicit": true,
+        "checkForEach": true
+      }
+    ],
+    "no-await-in-loop": "error",
+    "no-constant-binary-expression": "warn",
+    "no-duplicate-imports": "error",
+    "no-self-compare": "error",
+    "no-unmodified-loop-condition": "error",
+    "no-unreachable": "warn",
+    "no-use-before-define": "error",
+    "no-anonymous-default-export": "off",
+    "prettier/prettier": "warn",
+    "curly": ["warn", "multi-or-nest", "consistent"]
+  }
+}

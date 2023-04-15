@@ -1,0 +1,62 @@
+version: '3.9'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      target: ${NODE_ENV}
+    container_name: notepad-frontend-${NODE_ENV}
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - REACT_APP_API_URL=http://backend:8080
+      - PORT=3000
+    ports:
+      - ${APP_PORT}:3000
+    restart: on-failure
+    depends_on:
+      - backend
+      - db
+    networks:
+      - notepad
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      target: ${NODE_ENV}
+    container_name: notepad-backend-${NODE_ENV}
+    expose:
+      - 8080
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=8080
+      - DB_HOST=db
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - db
+    deploy:
+      replicas: ${API_WORKERS}
+      restart_policy:
+        condition: on-failure
+    networks:
+      - notepad
+
+  db:
+    image: mariadb:10.3
+    container_name: notepad-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - TZ=America/Bahia
+    volumes:
+      - ./data:/var/lib/mysql
+    restart: on-failure
+    networks:
+      - notepad
+
+networks:
+  notepad:
+    driver: bridge

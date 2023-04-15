@@ -1,0 +1,29 @@
+# Editor directories and files
+.idea/
+.vscode/
+
+# Node modules
+node_modules/
+
+# Build output
+build/
+dist/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+
+# Environment variables
+.env
+!example.env
+!.env.example
+
+# Local development
+.env.local
+.env.*.local
+.env.local.*
