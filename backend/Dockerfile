@@ -1,4 +1,5 @@
 FROM node:16-alpine AS base
+USER node
 WORKDIR /app
 COPY ./backend/package*.json ./
 
