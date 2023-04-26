@@ -66,14 +66,14 @@ const tokenCookie = {
 
 /************** HANDLERS **************/
 export const createUser = async (req: Req, res: Res, next: Next) => {
-  const { error, value: data } = userSchema
-    .tailor('create')
-    .validate(req.body, {
-      abortEarly: false,
-    }); // TODO: test capitalize name
-  if (error) next(new HttpError(400, 'Dados inválidos', error));
-
   try {
+    const { error, value: data } = userSchema
+      .tailor('create')
+      .validate(req.body, {
+        abortEarly: false,
+      }); // TODO: test capitalize name
+    if (error) throw new HttpError(400, 'Dados inválidos', error);
+
     const user = await userService.createUser(data);
     if (!user) throw new HttpError(500, 'Erro ao criar usuário');
 
@@ -83,7 +83,7 @@ export const createUser = async (req: Req, res: Res, next: Next) => {
     res.status(201).json({ user });
   } catch (error: any) {
     if (error.code === 'ER_DUP_ENTRY' && error.message.includes('email')) {
-      next(new HttpError(409, 'Email já cadastrado'));
+      return next(new HttpError(409, 'Email já cadastrado'));
     }
     next(error);
   }
@@ -96,7 +96,7 @@ export const getUser = async (req: Req, res: Res, next: Next) => {
 
     const user = await userService.getUser(id);
     if (!user) throw new HttpError(404, 'Usuário não encontrado');
-    res.json({ user });
+    res.json(user);
   } catch (error) {
     next(error);
   }
@@ -116,8 +116,8 @@ export const updateUser = async (req: Req, res: Res, next: Next) => {
     const user = await userService.updateUser(id, data);
     if (!user) throw new HttpError(404, 'Usuário não encontrado');
 
-    res.json({ user });
-  } catch (error: any) {
+    res.json(user);
+  } catch (error) {
     next(error);
   }
 };
@@ -128,7 +128,7 @@ export const deleteUser = async (req: Req, res: Res, next: Next) => {
     if (error) throw new HttpError(400, 'ID inválido', error);
     if (req.user?.id !== id) throw new HttpError(403, 'Acesso negado');
 
-    await userService.deleteUser(id as number);
+    await userService.deleteUser(id);
 
     // res.clearCookie('token', { ...authCookieOptions, maxAge: 0 });
     tokenCookie.clear(res);

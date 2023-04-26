@@ -1,11 +1,12 @@
 import { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
-  return knex.schema.createTable('users', (table) => {
+  return knex.schema.createTable('notes', (table) => {
     table.increments('id').primary();
-    table.string('name', 80).notNullable(); // TODO: validate name length
-    table.string('email', 80).notNullable().unique(); // TODO: validate email length
-    table.string('password').notNullable();
+    table.string('title').notNullable();
+    table.text('content').notNullable();
+    table.integer('user_id').unsigned().notNullable();
+    table.foreign('user_id').references('id').inTable('users');
     table
       .timestamp('created_at')
       .notNullable()
@@ -18,5 +19,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable('users');
+  return knex.schema.dropTable('notes');
 }

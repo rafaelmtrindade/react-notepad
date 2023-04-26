@@ -45,7 +45,7 @@
     "no-unreachable": "warn",
     "no-use-before-define": "error",
     "no-anonymous-default-export": "off",
-    "prettier/prettier": "warn",
+    "prettier/prettier": "off",
     "curly": ["warn", "multi-or-nest", "consistent"]
   }
 }

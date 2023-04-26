@@ -1,7 +1,8 @@
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-// import userRoutes from './routes/user';
+import userRoutes from './routes/user';
+import noteRoutes from './routes/note';
 import errorHandler from './middlewares/error';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -26,9 +27,11 @@ app.use(express.urlencoded({ extended: true }));
 
 /* ************* ROUTERS VÃO AQUI ************* */
 
-// app.use('/users', userRoutes);
+app.use('/users', userRoutes);
+app.use('/notes', noteRoutes);
 
 app.get('/test', (req, res) => {
+  // eslint-disable-next-line no-console
   console.log('received request');
   res.json({ message: 'Hello from server!' });
 });
