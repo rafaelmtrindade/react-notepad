@@ -59,12 +59,39 @@ export default function NotesPage() {
                         </div>
                     </div>
                         <div className="col py-3">
-                            <h1>Anotação 1</h1>
-                            <hr />
-                            <p className="lead">
-                                Lorem ipsu
-                            </p>
-                            <hr />
+                            <Form>
+                                <Form.Group controlId='titulo'>
+                                    <div className="d-flex justify-content-between">
+                                        <Form.Label className='me-1 mt-2'>Titulo</Form.Label>
+                                        <Form.Control
+                                            required
+                                            type="text" 
+                                            placeholder="Titulo" 
+                                        />
+                                    </div>
+                                </Form.Group>
+                                <hr />
+                                <Form.Group className="mb-3 mt-1" controlId="email">
+                                    <Form.Control
+                                        required
+                                        placeholder='Digite sua anotação aqui...'
+                                        as="textarea" 
+                                        rows={5} 
+                                    />
+                                </Form.Group>
+                                <hr />
+                                <Form.Group style={{float:'right'}} className="mt-1" controlId="email">
+                                    <Button className='me-2' variant="success" type="submit">
+                                        Salvar
+                                    </Button>
+                                    <Button className='me-2' variant="info" type="submit">
+                                        Editar
+                                    </Button>
+                                    <Button variant="danger" type="submit">
+                                        Excluir
+                                    </Button>
+                                </Form.Group>
+                            </Form>
                         </div>
                 </div>
             </section>

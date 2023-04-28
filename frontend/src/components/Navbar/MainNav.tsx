@@ -17,7 +17,7 @@ export default function MainNav() {
       <Navbar
         className={
           styles.nav +
-          ' d-flex justify-content-around mb-5 py-0 px-5 w-100 align-items-center sticky-top bg-white'
+          ' d-flex justify-content-around bg-dark py-0 px-5 w-100 align-items-center sticky-top'
         }
       >
         {user && (
@@ -36,7 +36,7 @@ export default function MainNav() {
             alt="Logo"
             className={styles.logo + ' text-center'}
           /> */}
-          <h1 className="text-center">Notepad</h1>
+          <h1 className="text-center text-white">Notepad</h1>
         </Link>
 
         {user && (
