@@ -1,32 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+// import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { UserProvider } from './hooks/useUser';
+// import { ProtectedLayout } from './components/_Layout/ProtectedLayout';
+
+import LoginPage from './pages/Login';
+// import { RegisterPage } from './pages/RegisterPage';
+// import { NotesPage } from './pages/NotesPage';
+
+const queryClient = new QueryClient();
 
 function App() {
-  const testRequest = async () => {
-    console.log(process.env.REACT_APP_API_URL);
-    const response = await fetch('/api/test');
-    const data = await response.json();
-    console.log(data);
-  };
-  testRequest();
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          {/* //   <Route path="/register" element={<RegisterPage />} />
+    //   <Route element={<ProtectedLayout />}>
+    //     <Route path="/" element={<NotesPage />} />
+    //   </Route> */}
+        </Routes>
+        <div>App</div>
+      </UserProvider>
+    </QueryClientProvider>
   );
 }
 

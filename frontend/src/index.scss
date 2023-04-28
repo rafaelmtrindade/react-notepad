@@ -1,0 +1,51 @@
+$font-family-base: Verdana, Geneva, Tahoma, sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.5;
+
+$primary: #00437f;
+$secondary: #a8abae;
+$light: #ccc;
+
+// @media (prefers-color-scheme: light) {
+//   body.dark-theme {
+//   }
+// /* color: blue;
+// }
+
+// @media (prefer-color-scheme: dark) {
+//   body.light-theme {
+//     $primary: #00437f;
+//     $secondary: #a8abae;
+//     $light: #ccc;
+//   }
+// }
+
+@import '~bootstrap/scss/bootstrap';
+
+html {
+  min-height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+  height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+  min-width: 100vh;
+  display: inherit;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'] {
+  // use appropriate property instead:
+  // -moz-appearance: textfield;
+  appearance: textfield;
+}
