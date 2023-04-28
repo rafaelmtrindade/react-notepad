@@ -51,15 +51,26 @@ export default function MainNav() {
           </Button>
         )}
         {!user && (
-          <Button
-            variant="primary"
-            size="sm"
-            className={styles.btn + ' align-items-center'}
-            as={Link as any}
-            to="/login"
-          >
-            Entrar
-          </Button>
+          <div>
+            <Button
+              variant="primary"
+              size="sm"
+              className={styles.btn + ' align-items-center me-3'}
+              as={Link as any}
+              to="/login"
+            >
+              Entrar
+            </Button>
+            <Button
+              variant="outline-primary"
+              size="sm"
+              className={styles.btn + ' align-items-center'}
+              as={Link as any}
+              to="/register"
+            >
+              Cadastre-se
+            </Button>
+          </div>
         )}
       </Navbar>
       {/* <Sidebar show={showSidebar} onHide={() => setShowSidebar(false)} /> */}

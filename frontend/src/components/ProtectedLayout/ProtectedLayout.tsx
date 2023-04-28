@@ -6,13 +6,13 @@ import { useUser } from '../../hooks/useUser';
 export default function ProtectedLayout() {
   const { user: loggedUser } = useUser() ?? {};
   // const { pathname } = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const outlet = useOutlet();
 
   useEffect(() => {
     if (loggedUser) return;
     // setOrigin(pathname);
-    // navigate('/login', { replace: true });
+    navigate('/login', { replace: true });
   }, [loggedUser]); //, pathname]);
 
   if (!loggedUser) return null;

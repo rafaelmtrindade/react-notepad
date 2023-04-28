@@ -18,14 +18,13 @@ function App() {
       <UserProvider>
         <MainNav />
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          {/* <Route element={< ProtectedLayout />}> */}
+          <Route element={<ProtectedLayout />}>
             <Route path="/notes" element={<NotesPage />} />
-          {/* </Route> */}
-          <Route path="/" element={<HomePage />} />
+          </Route>
         </Routes>
-        {/* <div>App</div> */}
       </UserProvider>
     </QueryClientProvider>
   );
