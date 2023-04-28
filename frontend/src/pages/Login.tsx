@@ -3,7 +3,7 @@ import styles from './Login.module.css';
 import { Fragment, useState, FC } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, Card } from 'react-bootstrap';
 
 import { useUser } from '../hooks/useUser';
 
@@ -50,56 +50,65 @@ export default function LoginPage() {
         <title>Notepad | Login</title>
       </Helmet>
       {/* TODO: formatar formulário */}
-      <section className="container d-flex flex-column justify-content-around p-4">
-        <Form
-          noValidate
-          validated={validated}
-          onSubmit={handleSubmit}
-          className="px-3"
+      <section className="col-md-5 offset-md-4 mt-5">
+        <Card 
+          className='text-white bg-dark'
         >
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              required
-              type="email"
-              placeholder="Digite seu email"
-              onChange={handleEmail}
-              name="email"
-            />
-            <Form.Control.Feedback type="invalid">
-              Por favor, digite seu email.
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group controlId="password" className="mt-3">
-            <Form.Label>Senha</Form.Label>
-            <Form.Control
-              required
-              type="password"
-              placeholder="Senha"
-              className={styles['no-validate']}
-              onChange={handlePassword}
-              name="password"
-            />
-            <Form.Control.Feedback type="invalid">
-              Por favor, informe a senha.
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Alert
-            variant="danger"
-            className={'mt-3 mb-0' + (!error ? ' d-none' : '')}
+          <Card.Header>
+            <h3 className="mb-0">Entrar</h3>
+          </Card.Header>
+          <Card.Body>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit}
+            className=""
           >
-            Usuário ou senha inválidos.
-          </Alert>
-          <Form.Group className="text-center mt-4">
-            <Button
-              variant="primary"
-              type="submit"
-              className={styles['btn-login']}
+            <Form.Group className="mb-3 mt-1" controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                required
+                type="email"
+                placeholder="Digite seu email"
+                onChange={handleEmail}
+                name="email"
+              />
+              <Form.Control.Feedback type="invalid">
+                Por favor, digite seu email.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group controlId="password" className="mt-3">
+              <Form.Label>Senha</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder="Senha"
+                className={styles['no-validate']}
+                onChange={handlePassword}
+                name="password"
+              />
+              <Form.Control.Feedback type="invalid">
+                Por favor, informe a senha.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Alert
+              variant="danger"
+              className={'mt-3 mb-0' + (!error ? ' d-none' : '')}
             >
-              Entrar
-            </Button>
-          </Form.Group>
-        </Form>
+              Usuário ou senha inválidos.
+            </Alert>
+            <Form.Group className="text-center mt-4">
+              <Button
+                variant="success"
+                type="submit"
+                className='btn-lg w-100'
+              >
+                Entrar
+              </Button>
+            </Form.Group>
+          </Form>
+          </Card.Body>
+        </Card>
       </section>
     </Fragment>
   );
