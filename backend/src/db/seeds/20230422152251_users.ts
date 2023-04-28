@@ -16,6 +16,6 @@ export async function seed(knex: Knex): Promise<void> {
     users.push(newUser(i));
   }
 
-  await knex('users').truncate();
+  await knex('users').del();
   await knex('users').insert(users);
 }

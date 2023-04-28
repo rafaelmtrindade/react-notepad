@@ -13,7 +13,7 @@ const newSalt = () => {
     const envFile = fs.readFileSync(envPath, 'utf8');
     const updatedEnvFile = SALT
       ? envFile.replace(`${SALT}`, `${salt}`)
-      : envFile + `\nSALT=${salt}\n`;
+      : envFile + `\nSALT='${salt}'\n`;
     fs.writeFileSync(envPath, updatedEnvFile, 'utf8');
   } catch (err) {
     console.log('Salt generated, update .env file with this value:');
@@ -31,3 +31,7 @@ export const hashPassword = (password: string) => {
 export const uuid = (seed?: string) => {
   return seed ? uuidV5(seed, '6ba7b810-9dad-11d1-80b4-00c04fd430c8') : uuidV4();
 };
+
+if (require.main === module) {
+  newSalt();
+}
