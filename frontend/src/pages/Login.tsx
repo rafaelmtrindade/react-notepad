@@ -34,6 +34,7 @@ export default function LoginPage() {
       navigate('/dashboard');
     } catch (err) {
       setError(err as object);
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -51,62 +52,60 @@ export default function LoginPage() {
       </Helmet>
       {/* TODO: formatar formulário */}
       <section className="col-md-5 offset-md-4 mt-5">
-        <Card 
-          className='text-white bg-dark'
-        >
+        <Card className="text-white bg-dark">
           <Card.Header>
             <h3 className="mb-0">Entrar</h3>
           </Card.Header>
           <Card.Body>
-          <Form
-            noValidate
-            validated={validated}
-            onSubmit={handleSubmit}
-            className=""
-          >
-            <Form.Group className="mb-3 mt-1" controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                required
-                type="email"
-                placeholder="Digite seu email"
-                onChange={handleEmail}
-                name="email"
-              />
-              <Form.Control.Feedback type="invalid">
-                Por favor, digite seu email.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="password" className="mt-3">
-              <Form.Label>Senha</Form.Label>
-              <Form.Control
-                required
-                type="password"
-                placeholder="Senha"
-                className={styles['no-validate']}
-                onChange={handlePassword}
-                name="password"
-              />
-              <Form.Control.Feedback type="invalid">
-                Por favor, informe a senha.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Alert
-              variant="danger"
-              className={'mt-3 mb-0' + (!error ? ' d-none' : '')}
+            <Form
+              noValidate
+              validated={validated}
+              onSubmit={handleSubmit}
+              className=""
             >
-              Usuário ou senha inválidos.
-            </Alert>
-            <Form.Group className="text-center mt-4">
-              <Button
-                variant="success"
-                type="submit"
-                className='btn-lg w-100'
+              <Form.Group className="mb-3 mt-1" controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  required
+                  type="email"
+                  placeholder="Digite seu email"
+                  onChange={handleEmail}
+                  name="email"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Por favor, digite seu email.
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="password" className="mt-3">
+                <Form.Label>Senha</Form.Label>
+                <Form.Control
+                  required
+                  type="password"
+                  placeholder="Senha"
+                  className={styles['no-validate']}
+                  onChange={handlePassword}
+                  name="password"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Por favor, informe a senha.
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Alert
+                variant="danger"
+                className={'mt-3 mb-0' + (!error ? ' d-none' : '')}
               >
-                Entrar
-              </Button>
-            </Form.Group>
-          </Form>
+                Usuário ou senha inválidos.
+              </Alert>
+              <Form.Group className="text-center mt-4">
+                <Button
+                  variant="success"
+                  type="submit"
+                  className="btn-lg w-100"
+                >
+                  Entrar
+                </Button>
+              </Form.Group>
+            </Form>
           </Card.Body>
         </Card>
       </section>
