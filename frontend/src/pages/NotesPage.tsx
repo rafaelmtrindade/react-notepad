@@ -5,6 +5,9 @@ import { Form, Button, Alert, Card, Dropdown } from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
+import { BsFillTrashFill } from "react-icons/bs";
+import { RiSave3Fill } from "react-icons/ri";
+import { FaRegStickyNote } from "react-icons/fa";
 
 export default function NotesPage() {
     return (
@@ -17,22 +20,27 @@ export default function NotesPage() {
                     <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                         <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                             <a href="/" className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                                <span className="fs-5 d-none d-sm-inline">Notepad</span>
+                                <span className="fs-5 d-none d-sm-inline">Minhas Notas</span>
                             </a>
                             <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                                 <li className="nav-item">
                                     <a href="#" className="nav-link align-middle px-0">
-                                        <i className="fs-4 bi-house"></i> <span className="ms-1 d-none d-sm-inline">Anotação 1</span>
+                                        <FaRegStickyNote /> <span className="ms-1 d-none d-sm-inline">Anotação 1</span>
                                     </a>
                                 </li>
                                 <li className="nav-item">
                                     <a href="#" className="nav-link align-middle px-0">
-                                        <i className="fs-4 bi-house"></i> <span className="ms-1 d-none d-sm-inline">Anotação 2</span>
+                                        <FaRegStickyNote /> <span className="ms-1 d-none d-sm-inline">Anotação 2</span>
                                     </a>
                                 </li>
                                 <li className="nav-item">
                                     <a href="#" className="nav-link align-middle px-0">
-                                        <i className="fs-4 bi-house"></i> <span className="ms-1 d-none d-sm-inline">Anotação 3</span>
+                                        <FaRegStickyNote /> <span className="ms-1 d-none d-sm-inline">Anotação 3</span>
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a href="#" className="nav-link align-middle px-0">
+                                        <FaRegStickyNote /> <span className="ms-1 d-none d-sm-inline text-truncate">adfoiadsjfijadojfoiadsjfioajdfpia</span>
                                     </a>
                                 </li>
                             </ul>
@@ -59,38 +67,46 @@ export default function NotesPage() {
                         </div>
                     </div>
                         <div className="col py-3">
-                            <Form>
+                            <Form className='d-flex justify-content-between flex-column'>
                                 <Form.Group controlId='titulo'>
                                     <div className="d-flex justify-content-between">
                                         <Form.Label className='me-1 mt-2'>Titulo</Form.Label>
                                         <Form.Control
                                             required
                                             type="text" 
-                                            placeholder="Titulo" 
+                                            placeholder="Titulo"
+                                            className='me-2'
                                         />
+                                        <Button 
+                                            variant="danger"
+                                            className='px-2 py-1'
+                                        >
+                                            <BsFillTrashFill />
+                                        </Button>
                                     </div>
                                 </Form.Group>
                                 <hr />
-                                <Form.Group className="mb-3 mt-1" controlId="email">
+                                {/* <div>
+
+                                </div> */}
+                                <Form.Group className="flex-grow-2 mb-3 mt-1" controlId="email">
                                     <Form.Control
+                                        className=''
+                                        style={{resize:'none', overflow:'auto', height:'100%'}}
                                         required
                                         placeholder='Digite sua anotação aqui...'
                                         as="textarea" 
-                                        rows={5} 
+                                        rows={5}
                                     />
                                 </Form.Group>
-                                <hr />
-                                <Form.Group style={{float:'right'}} className="mt-1" controlId="email">
-                                    <Button className='me-2' variant="success" type="submit">
-                                        Salvar
-                                    </Button>
-                                    <Button className='me-2' variant="info" type="submit">
-                                        Editar
-                                    </Button>
-                                    <Button variant="danger" type="submit">
-                                        Excluir
-                                    </Button>
-                                </Form.Group>
+                                <div className='fixed-bottom mb-2'>
+                                    <hr />
+                                    <Form.Group style={{float:'right'}} className="mt-1" controlId="email">
+                                        <Button className='me-2' variant="success" type="submit">
+                                            <RiSave3Fill className='me-2 mb-1' />Salvar
+                                        </Button>
+                                    </Form.Group>
+                                </div>
                             </Form>
                         </div>
                 </div>

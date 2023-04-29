@@ -20,7 +20,7 @@ export default function MainNav() {
           ' d-flex justify-content-around bg-dark py-0 px-5 w-100 align-items-center sticky-top'
         }
       >
-        {user && (
+        {/* {user && (
           <Button
             className={styles.btn + ' text-decoration-none align-items-center'}
             onClick={() => setShowSidebar(true)}
@@ -29,13 +29,15 @@ export default function MainNav() {
             <BsList size="24px" className={styles.icon} />
             <span className="ms-1">Menu</span>
           </Button>
-        )}
-        <Link className="navbar-brand mx-5" to="/">
-          {/* <img
+        )} */}
+        <Link className="d-flex navbar-brand mx-5" to="/">
+          <img
             src="/logo.png"
             alt="Logo"
-            className={styles.logo + ' text-center'}
-          /> */}
+            width="60"
+            height="60"
+            className={styles.logo + ' text-center me-3'}
+          />
           <h1 className="text-center text-white">Notepad</h1>
         </Link>
 
@@ -55,7 +57,7 @@ export default function MainNav() {
             <Button
               variant="primary"
               size="sm"
-              className={styles.btn + ' align-items-center me-3'}
+              className={styles.btn + ' align-items-center me-3 fs-6 fw-bold'}
               as={Link as any}
               to="/login"
             >
@@ -64,7 +66,7 @@ export default function MainNav() {
             <Button
               variant="outline-primary"
               size="sm"
-              className={styles.btn + ' align-items-center'}
+              className={styles.btn + ' align-items-center fs-6 fw-bold'}
               as={Link as any}
               to="/register"
             >

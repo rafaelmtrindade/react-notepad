@@ -98,9 +98,17 @@ export default function LoginPage() {
               </Alert>
               <Form.Group className="text-center mt-4">
                 <Button
-                  variant="success"
+                  variant="outline-primary"
+                  type="button"
+                  className="btn-lg me-2"
+                  onClick={() => navigate('/register')}
+                >
+                  Cadastre-se
+                </Button>
+                <Button
+                  variant="primary"
                   type="submit"
-                  className="btn-lg w-100"
+                  className="btn-lg"
                 >
                   Entrar
                 </Button>
