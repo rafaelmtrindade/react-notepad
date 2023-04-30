@@ -16,7 +16,7 @@ export interface User {
   updatedAt: string;
 }
 
-type PostUser = Pick<User, 'name' | 'email'> & {
+export type PostUser = Pick<User, 'name' | 'email'> & {
   password: string;
   confirmPassword: string;
 };

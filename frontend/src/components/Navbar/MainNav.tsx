@@ -30,7 +30,10 @@ export default function MainNav() {
             <span className="ms-1">Menu</span>
           </Button>
         )} */}
-        <Link className="d-flex navbar-brand mx-5" to="/">
+        <Link
+          className="d-flex navbar-brand ms-5 me-auto"
+          to={user ? '/notes' : '/'}
+        >
           <img
             src="/logo.png"
             alt="Logo"
@@ -57,7 +60,7 @@ export default function MainNav() {
             <Button
               variant="primary"
               size="sm"
-              className={styles.btn + ' align-items-center me-3 fs-6 fw-bold'}
+              className={styles.btn + ' align-items-center me-3 fs-6'}
               as={Link as any}
               to="/login"
             >
@@ -66,7 +69,7 @@ export default function MainNav() {
             <Button
               variant="outline-primary"
               size="sm"
-              className={styles.btn + ' align-items-center fs-6 fw-bold'}
+              className={styles.btn + ' align-items-center fs-6'}
               as={Link as any}
               to="/register"
             >

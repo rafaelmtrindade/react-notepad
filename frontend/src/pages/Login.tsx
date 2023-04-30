@@ -1,15 +1,17 @@
 import styles from './Login.module.css';
 
-import { Fragment, useState, FC } from 'react';
+import { Fragment, useState, FormEvent, ChangeEvent, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Form, Button, Alert, Card } from 'react-bootstrap';
 
 import { useUser } from '../hooks/useUser';
 
 export default function LoginPage() {
-  const { login } = useUser() ?? {};
+  const { user, login } = useUser() ?? {};
   const navigate = useNavigate();
+  const goBack = () =>
+    window.history.length > 3 ? navigate(-1) : navigate('/notes');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,10 +19,19 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [validated, setValidated] = useState(false);
 
+  useEffect(() => {
+    if (!user) return;
+    goBack();
+  }, []);
+
   if (!login) return null;
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  if (user) return null;
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
+
+    if (loading) return;
 
     setValidated(true);
     const form = event.currentTarget;
@@ -31,7 +42,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      navigate('/dashboard');
+      goBack();
     } catch (err) {
       setError(err as object);
       console.log(err);
@@ -40,9 +51,9 @@ export default function LoginPage() {
     }
   };
 
-  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) =>
+  const handleEmail = (event: ChangeEvent<HTMLInputElement>) =>
     setEmail(event.target.value);
-  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) =>
+  const handlePassword = (event: ChangeEvent<HTMLInputElement>) =>
     setPassword(event.target.value);
 
   return (
@@ -87,7 +98,7 @@ export default function LoginPage() {
                   name="password"
                 />
                 <Form.Control.Feedback type="invalid">
-                  Por favor, informe a senha.
+                  Por favor, informe sua senha.
                 </Form.Control.Feedback>
               </Form.Group>
               <Alert
@@ -105,11 +116,7 @@ export default function LoginPage() {
                 >
                   Cadastre-se
                 </Button>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="btn-lg"
-                >
+                <Button variant="primary" type="submit" className="btn-lg">
                   Entrar
                 </Button>
               </Form.Group>

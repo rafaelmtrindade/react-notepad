@@ -21,6 +21,7 @@ const userSchema = Joi.object({
   name: Joi.string()
     .pattern(/^[a-zA-Z ]*$/)
     .trim()
+    .lowercase()
     .custom((val: string) => {
       return val.replace(/\b\w/g, (c: string) => c.toUpperCase());
     })
