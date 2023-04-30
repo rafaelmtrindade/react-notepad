@@ -9,6 +9,7 @@ import LoginPage from './pages/Login';
 import RegisterPage from './pages/RegisterPage';
 import NotesPage from './pages/NotesPage';
 import HomePage from './pages/Home';
+import { NoteProvider } from './hooks/useNote';
 
 const queryClient = new QueryClient();
 
@@ -21,9 +22,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          {/* <Route element={<ProtectedLayout />}> */}
+          <Route element={<ProtectedLayout />}>
             <Route path="/notes" element={<NotesPage />} />
-          {/* </Route> */}
+          </Route>
         </Routes>
       </UserProvider>
     </QueryClientProvider>

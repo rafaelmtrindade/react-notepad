@@ -15,21 +15,43 @@ export interface Note {
   updatedAt: Date;
 }
 
+const snakeNote = (note: NewNote) => ({
+  title: note.title,
+  content: note.content,
+  user_id: note.userId,
+});
+
 const create = (note: NewNote) => {
-  return knex<Note>('notes').insert(note).returning('id');
+  return knex<Note>('notes').insert(snakeNote(note)).returning('id');
 };
 
 const findById = (id: number) => {
-  return knex<Note>('notes').where({ id }).first();
+  const fields = {
+    id: 'id',
+    title: 'title',
+    content: 'content',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  };
+  return knex<Note>('notes').select(fields).where({ id }).first();
 };
 
 const findByUserId = (userId: number) => {
   // TODO: Implementar paginação, limite padrão e busca/filtro
-  return knex<Note>('notes').where({ userId });
+  const fields = {
+    id: 'id',
+    title: 'title',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  };
+  return knex<Note>('notes').select(fields).where('user_id', userId);
 };
 
 const update = (id: number, note: NewNote) => {
-  return knex<Note>('notes').where({ id }).update(note).returning('id');
+  return knex<Note>('notes')
+    .where({ id })
+    .update(snakeNote(note))
+    .returning('id');
 };
 
 const del = (id: number) => {

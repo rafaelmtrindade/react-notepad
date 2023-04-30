@@ -42,9 +42,8 @@ export const getNote = async (req: Req, res: Res, next: Next) => {
   try {
     const { error, value: id } = idSchema.validate(req.params.id);
     if (error) throw new HttpError(400, 'ID inválido', error);
-    if (req.user?.id !== id) throw new HttpError(403, 'Acesso negado');
 
-    const note = await noteService.getNote(id);
+    const note = await noteService.getNote(id, req.user?.id as number);
     if (!note) throw new HttpError(404, 'Nota não encontrada');
     res.json(note);
   } catch (error) {
@@ -69,14 +68,13 @@ export const updateNote = async (req: Req, res: Res, next: Next) => {
   try {
     const { error: idError, value: id } = idSchema.validate(req.params.id);
     if (idError) throw new HttpError(400, 'ID inválido');
-    if (req.user?.id !== id) throw new HttpError(403, 'Acesso negado');
 
     const { error, value: data } = noteSchema
       .tailor('update')
-      .validate(req.body);
+      .validate({ ...req.body, userId: req.user?.id });
     if (error) throw new HttpError(400, 'Dados inválidos', error);
 
-    const note = await noteService.updateNote(id, data);
+    const note = await noteService.updateNote(id, data.userId, data);
     if (!note) throw new HttpError(404, 'Nota não encontrada');
 
     res.json(note);
@@ -89,9 +87,8 @@ export const deleteNote = async (req: Req, res: Res, next: Next) => {
   try {
     const { error, value: id } = idSchema.validate(req.params.id);
     if (error) throw new HttpError(400, 'ID inválido', error);
-    if (req.user?.id !== id) throw new HttpError(403, 'Acesso negado');
 
-    await noteService.deleteNote(id);
+    await noteService.deleteNote(id, req.user?.id as number);
 
     res.status(204).end();
   } catch (error) {

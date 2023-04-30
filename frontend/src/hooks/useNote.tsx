@@ -16,11 +16,12 @@ export interface Note {
   updatedAt: string;
 }
 
-type PostNote = Pick<Note, 'title' | 'content'>;
-type ListNote = Pick<Note, 'id' | 'title' | 'createdAt' | 'updatedAt'>;
+export type PostNote = Pick<Note, 'title' | 'content'>;
+export type ListNote = Pick<Note, 'id' | 'title' | 'createdAt' | 'updatedAt'>;
 
 interface INoteContext {
   note: Note | null;
+  setNote: React.Dispatch<React.SetStateAction<Note | null>>;
   notes: ListNote[] | [];
   getNotes: () => void;
   getNote: (id: number) => void;
@@ -40,7 +41,13 @@ export const NoteProvider: FC<PropsWithChildren> = ({ children }) => {
       const response = await fetchApi('/notes');
       const data = await response.json();
 
-      if (response.ok) throw data;
+      if (!response.ok) throw data;
+      (data as ListNote[]).sort((a, b) => {
+        const dateA = new Date(a.updatedAt).getTime();
+        const dateB = new Date(b.updatedAt).getTime();
+
+        return dateA - dateB;
+      });
       setNotes(data as ListNote[]);
     } catch (error) {
       console.error(error);
@@ -59,26 +66,34 @@ export const NoteProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const postNote = async (newNote: PostNote) => {
+    const response = await fetchApi('/notes', 'POST', { body: newNote });
+    const data = await response.json();
+
+    if (!response.ok) throw data;
+
+    setNote(data as Note);
+    getNotes();
+  };
+
+  const putNote = async (newNote: PostNote) => {
+    const response = await fetchApi(`/notes/${note?.id}`, 'PUT', {
+      body: newNote,
+    });
+    const data = await response.json();
+
+    if (!response.ok) throw data;
+
+    setNote(data as Note);
+    getNotes();
+  };
+
   const saveNote = async (newNote: PostNote) => {
+    if (!newNote.title && !newNote.content) return;
     try {
-      let route: string;
-      let method: 'POST' | 'PUT';
-      if (note) {
-        route = `/notes/${note.id}`;
-        method = 'PUT';
-      } else {
-        route = '/notes';
-        method = 'POST';
-      }
-
-      const response = await fetchApi(route, method, { body: newNote });
-      const data = await response.json();
-
-      if (!response.ok) throw data;
-
-      setNote(data as Note);
+      note ? await putNote(newNote) : await postNote(newNote);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -86,11 +101,12 @@ export const NoteProvider: FC<PropsWithChildren> = ({ children }) => {
     try {
       if (!note) throw new Error('Nenhuma nota selecionada');
       const response = await fetchApi(`/notes/${note.id}`, 'DELETE');
+
+      if (response.ok) {
+        return setNote(null);
+      }
       const data = await response.json();
-
-      if (!response.ok) throw data;
-
-      setNote(null);
+      throw data;
     } catch (error) {
       console.error(error);
     }
@@ -99,6 +115,7 @@ export const NoteProvider: FC<PropsWithChildren> = ({ children }) => {
   const value = useMemo(
     () => ({
       note,
+      setNote,
       notes,
       getNotes,
       getNote,

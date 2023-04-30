@@ -52,12 +52,8 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetchApi('/users/logout', 'POST');
-
-      if (response.ok) return setUser(null);
-
-      const err = await response.json();
-      throw err;
+      await fetchApi('/users/logout', 'POST');
+      return setUser(null);
     } catch (error) {
       console.error(error);
     }

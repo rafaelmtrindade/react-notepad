@@ -42,7 +42,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      goBack();
+      navigate('/notes');
     } catch (err) {
       setError(err as object);
       console.log(err);
@@ -61,7 +61,6 @@ export default function LoginPage() {
       <Helmet>
         <title>Notepad | Login</title>
       </Helmet>
-      {/* TODO: formatar formulário */}
       <section className="col-md-5 offset-md-4 mt-5">
         <Card className="text-white bg-dark">
           <Card.Header>
