@@ -13,7 +13,7 @@ CMD ["sh", "-c", "npm i && npm run dev"]
 FROM base AS build
 RUN npm ci
 COPY ./backend .
-RUN npm test --passWithNoTests && npm run build
+RUN npm test -- --passWithNoTests && npm run build
 
 FROM base AS production
 RUN npm ci --only=production

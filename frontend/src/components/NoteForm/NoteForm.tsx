@@ -14,7 +14,6 @@ export default function NoteForm() {
 
   useEffect(() => {
     if (note) {
-      console.log(noteTitle, noteContent);
       setNoteTitle(note.title);
       setNoteContent(note.content);
     } else {
@@ -36,7 +35,6 @@ export default function NoteForm() {
 
     try {
       await saveNote(noteToSave);
-      await getNotes();
     } catch (error) {
       console.log(error);
     } finally {
@@ -69,7 +67,6 @@ export default function NoteForm() {
               if (!window.confirm('Tem certeza que deseja excluir essa nota?'))
                 return;
               await deleteNote();
-              await getNotes();
             }}
           >
             <BsFillTrashFill className="me-2" />

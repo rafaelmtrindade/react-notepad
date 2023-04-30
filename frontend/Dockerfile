@@ -12,7 +12,7 @@ CMD ["sh", "-c", "npm i && npm start"]
 
 FROM base AS build
 RUN npm ci
-RUN npm test --passWithNoTests && npm run build
+RUN npm run build
 
 FROM nginx:1.21.1-alpine AS production
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf

@@ -7,7 +7,9 @@ import { BsPlusSquareFill as BsPlus, BsPlusLg } from 'react-icons/bs';
 export default function NotesList() {
   const { notes, getNotes, note, getNote, setNote } = useNote() ?? {};
 
-  useEffect(() => getNotes, [note]);
+  useEffect(() => {
+    getNotes && getNotes();
+  }, [note]);
 
   if (!getNotes || !getNote || !setNote) return null;
 

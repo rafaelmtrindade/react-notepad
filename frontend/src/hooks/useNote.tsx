@@ -71,9 +71,7 @@ export const NoteProvider: FC<PropsWithChildren> = ({ children }) => {
     const data = await response.json();
 
     if (!response.ok) throw data;
-
-    setNote(data as Note);
-    getNotes();
+    return data;
   };
 
   const putNote = async (newNote: PostNote) => {
@@ -83,15 +81,15 @@ export const NoteProvider: FC<PropsWithChildren> = ({ children }) => {
     const data = await response.json();
 
     if (!response.ok) throw data;
-
-    setNote(data as Note);
-    getNotes();
+    return data;
   };
 
   const saveNote = async (newNote: PostNote) => {
     if (!newNote.title && !newNote.content) return;
     try {
-      note ? await putNote(newNote) : await postNote(newNote);
+      const data = note ? await putNote(newNote) : await postNote(newNote);
+      setNote(data as Note);
+      getNotes();
     } catch (error) {
       console.log(error);
     }
