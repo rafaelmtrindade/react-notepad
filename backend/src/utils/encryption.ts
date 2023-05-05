@@ -2,10 +2,12 @@ import bcrypt from 'bcryptjs';
 import { v5 as uuidV5, v4 as uuidV4 } from 'uuid';
 import fs from 'fs';
 import path from 'path';
-const { SALT, SALT_ROUNDS } = process.env;
+const { SALT, SALT_ROUNDS = '10' } = process.env;
+
+if (!SALT) throw new Error('$SALT environment variable is undefined.');
 
 const newSalt = () => {
-  const rounds = SALT_ROUNDS ? +SALT_ROUNDS : 10;
+  const rounds = +SALT_ROUNDS;
   const salt = bcrypt.genSaltSync(rounds);
 
   try {
@@ -17,14 +19,14 @@ const newSalt = () => {
     fs.writeFileSync(envPath, updatedEnvFile, 'utf8');
   } catch (err) {
     console.log('Salt generated, update .env file with this value:');
-    console.log(`SALT=${salt}`);
+    console.log(`SALT='${salt}'`);
   }
 
   return salt;
 };
 
 export const hashPassword = (password: string) => {
-  const salt = SALT ? SALT : newSalt();
+  const salt = SALT;
   return bcrypt.hashSync(password, salt);
 };
 
